@@ -16,10 +16,12 @@ export class FeedComponent implements OnInit {
 
   postagem: Postagem = new Postagem()
   listaPostagens: Postagem[]
+  titulo: string
 
   tema: Tema = new Tema()
   listaTemas: Tema[]
   idTema: number
+  nomeTema: string
 
 
   constructor(
@@ -70,4 +72,23 @@ this.postagemService.getAllPostagens().subscribe((resp: Postagem[])=>{
     })
   }
 
+  findByTituloPostagem(){
+if(this.titulo ===''){
+  this.findAllPostagens()
+}else{
+  this.postagemService.getByTituloPostagem(this.titulo).subscribe((resp: Postagem [])=>{
+    this.listaPostagens = resp
+  })
+}
+  }
+
+  findByNomeTema(){
+    if(this.nomeTema ===''){
+      this.findAllTemas()
+    } else {
+      this.temaService.getByNomeTema(this.nomeTema).subscribe((resp: Tema[])=>{
+        this.listaTemas = resp
+      })
+    }
+  }
 }
