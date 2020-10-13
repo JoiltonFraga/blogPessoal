@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.prod';
 import { Postagem } from '../model/Postagem';
 import { Tema } from '../model/Tema';
+import { AlertasService } from '../service/alertas.service';
 import { PostagemService } from '../service/postagem.service';
 import { TemaService } from '../service/tema.service';
 
@@ -26,10 +29,18 @@ export class FeedComponent implements OnInit {
 
   constructor(
     private postagemService: PostagemService,
-    private temaService: TemaService
+    private temaService: TemaService,
+    private alerta: AlertasService,
+    private router: Router
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
+
+    let token = environment.token
+    if(token == ''){
+      this.router.navigate(['/login'])
+      this.alerta.showAlertDanger('Faça o login para acessar o feed.')
+    }
 
     window.scroll(0,0)
 
